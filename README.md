@@ -18,4 +18,9 @@ https://github.com/JorgeMaker/InfluxDBWorkBench
 
 --------------------
 
-npm run dev
+1) node scripts/check_faulty.js --repeat_every 5
+2) run the test using jmeter
+3) npm run dev  
+
+--------------------
+

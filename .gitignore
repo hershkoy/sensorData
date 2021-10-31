@@ -34,3 +34,5 @@ yarn-error.log*
 .vercel
 .env
 .vscode/launch.json
+influxdb_data/
+process.log
