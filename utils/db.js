@@ -21,7 +21,6 @@ export default async function getConnection() {
               value: Influx.FieldType.FLOAT
             },
             tags: [
-              'dt',
               'sensor_id',
               'face'
             ]

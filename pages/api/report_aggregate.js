@@ -5,7 +5,7 @@ let influx=null;
 function influxGetAggregateReport(){
   return new Promise((resolve, reject) => {
     try {
-      influx.queryRaw(`SELECT mean("value") FROM "temprature" where time<'2021-10-29T15:05:52.960826Z' group by time(1s),"face"`).then(results => {
+      influx.queryRaw(`SELECT mean("value") FROM "temprature" group by time(1s),"face"`).then(results => {
 
         let res_t = results.results[0].series.map((obj) => ({
             face: obj.tags.face,
