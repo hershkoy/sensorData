@@ -26,7 +26,7 @@ function influxGetAggregateReport(){
         //console.log(res);
 
         const map = new Map();
-        const result = [
+        let result = [
           ...res_t.reduce((acc, { face, values }) => {
               values.forEach((item) => {
                 let time = item[0];
@@ -39,6 +39,8 @@ function influxGetAggregateReport(){
             }, map)
             .values(),
         ];
+
+        result = result.filter(r => !(r.n==null && r.e==null && r.s==null && r.w==null ))
 
         //console.log(result);
         
@@ -56,6 +58,9 @@ function getKnownFaulty(){
       try {
         influx.queryRaw(` SELECT distinct(value) FROM "faulty"`).then(results => {
             //console.log(results.results[0].series);
+            if (!results.results[0].series) {
+              return resolve([]);
+            }            
             return resolve(results.results[0].series[0].values.map((o)=>o[1]));
         });
   

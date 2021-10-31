@@ -50,6 +50,7 @@ try{
 } 
 
 function saveFault(sensor_id){
+    known_faulty_sensors_ids.push(parseInt(sensor_id));
     influx.writePoints([
         {
           measurement: 'faulty',
@@ -68,6 +69,9 @@ function getKnownFaulty(){
         try {
           influx.queryRaw(` SELECT distinct(value) FROM "faulty"`).then(results => {
               //console.log(results.results[0].series);
+              if (!results.results[0].series) {
+                return resolve([]);
+              }              
               return resolve(results.results[0].series[0].values.map((o)=>o[1]));
           });
     
@@ -82,6 +86,9 @@ function getFaceTemparatures(face){
       try {
         influx.queryRaw(`SELECT mean("value") FROM "temprature" where face='${face}' group by time(1s),sensor_id fill(previous)`).then(results => {
             //console.log(results.results[0].series);
+            if (!results.results[0].series) {
+                return resolve([]);
+              }            
             return resolve(results.results[0].series);
         });
   
@@ -128,6 +135,7 @@ async function checkFault(face){
 
     while (true){
 
+        console.log(`check start`);
         faces.forEach((face)=>{
             checkFault(face);
         });
