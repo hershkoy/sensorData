@@ -1,0 +1,3 @@
+[submodule "whatever/mymodule"]
+	path = whatever/mymodule
+	url = git@github.com:hershkoy/sensorData_module.git
