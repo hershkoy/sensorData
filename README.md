@@ -27,3 +27,39 @@ https://github.com/JorgeMaker/InfluxDBWorkBench
 
 grafana:
 docker run -d -p 3000:3000 --name grafana grafana/grafana:7.3.6 
+
+
+## subtree
+setup:
+```
+git subtree split -P dummy/app -b dummy_split
+git push git@github.com:hershkoy:sensorData-dummy.git dummy_split:main --force
+git rm -r dummy/app
+git commit -m "remove the subtree folder"
+git subtree add --prefix=dummy/app sensorData-dummy main
+git push
+```
+
+usage:
+```
+git subtree split --prefix=dummy/app -b updates
+git push sensorData-dummy updates:updates
+git push sensorData-dummy HEAD:main   OR   pr and merge is github
+```
+
+## submodule
+setup:
+```
+git subtree split -P whatever/mymodule -b new_branch_for_submodule
+(create new empty repo in github )
+git push git@github.com:hershkoy:sensorData_module.git new_branch_for_submodule:main --force
+git rm -r whatever/mymodule
+git commit -m "remove the submodule folder"
+git submodule add git@github.com:hershkoy:sensorData_module.git whatever/mymodule
+git commit -m "add new repository as a submodule"
+git push origin main
+``` 
+
+usage:
+done using VSCODE
+
